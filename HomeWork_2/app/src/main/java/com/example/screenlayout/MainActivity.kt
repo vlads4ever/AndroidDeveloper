@@ -10,7 +10,7 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.text1.text = "Верхняя строчка, настроенная из кода"
-        binding.text2.text = "Нижняя строчка, настроенная из кода"
+        binding.customView.setFirstText(getText(R.string.first_text).toString())
+        binding.customView.setSecondText(getText(R.string.second_text).toString())
     }
 }
