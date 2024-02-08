@@ -10,7 +10,7 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.customView.setFirstText(getText(R.string.first_text).toString())
-        binding.customView.setSecondText(getText(R.string.second_text).toString())
+        binding.customView.setFirstText(getString(R.string.first_text))
+        binding.customView.setSecondText(getString(R.string.second_text))
     }
 }
