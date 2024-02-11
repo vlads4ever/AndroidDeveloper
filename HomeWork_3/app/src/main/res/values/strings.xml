@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Music Album</string>
+    <string name="artist">Исполнитель</string>
+    <string name="track">Наименование композиции</string>
 </resources>

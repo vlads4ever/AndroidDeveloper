@@ -9,21 +9,76 @@
     <ImageView
         android:id="@+id/album"
         android:src="@drawable/foo_album"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:contentDescription="TODO" />
+        tools:ignore="ContentDescription" />
 
     <ImageButton
+        android:id="@+id/play"
         android:src="@drawable/play_circle_24px"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:layout_marginTop="16dp"
+        android:background=""
         app:layout_constraintTop_toBottomOf="@id/album"
+        app:layout_constraintStart_toStartOf="@id/album"
+        app:layout_constraintEnd_toEndOf="@id/album"
+        tools:ignore="ContentDescription"/>
+
+    <ImageButton
+        android:id="@+id/next"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/skip_next_24px"
+        android:layout_margin="16dp"
+        app:layout_constraintTop_toTopOf="@id/play"
+        app:layout_constraintStart_toEndOf="@id/play"
+        app:layout_constraintBottom_toBottomOf="@id/play"
+        android:background="@null"
+        tools:ignore="ContentDescription"/>
+
+    <ImageButton
+        android:id="@+id/previous"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/skip_previous_24px"
+        android:layout_margin="16dp"
+        app:layout_constraintTop_toTopOf="@id/play"
+        app:layout_constraintBottom_toBottomOf="@id/play"
+        app:layout_constraintEnd_toStartOf="@id/play"
+        android:background="@null"
+        tools:ignore="ContentDescription"/>
+
+    <TextView
+        android:id="@+id/artist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/artist"
+        android:layout_margin="16dp"
+        android:paddingHorizontal="16dp"
+        android:lines="1"
+        android:ellipsize="end"
+        app:layout_constraintTop_toBottomOf="@id/play"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/track"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/track"
+        android:layout_margin="16dp"
+        android:paddingHorizontal="16dp"
+        android:lines="1"
+        android:ellipsize="end"
+        app:layout_constraintTop_toBottomOf="@id/artist"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
