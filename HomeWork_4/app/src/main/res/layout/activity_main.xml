@@ -13,15 +13,15 @@
         android:orientation="vertical"
         style="@style/MyTheme">
 
-
         <ImageView
             android:id="@+id/photo"
             style="@style/MyImageViewPhoto"
             android:layout_width="@dimen/width_photo"
             android:layout_height="@dimen/height_photo"
-            app:srcCompat = "@drawable/baseline_sentiment_satisfied_alt_24"
             android:background="@color/yellow"
-            android:contentDescription="@string/photo" />
+            android:contentDescription="@string/photo"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/account_circle_24px" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_input_name_layout"
@@ -33,7 +33,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_name_text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:maxLength="40"
+                android:inputType="text"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
