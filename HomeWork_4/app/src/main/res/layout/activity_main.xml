@@ -125,7 +125,6 @@
 
         </LinearLayout>
 
-
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/progress_scores"
             android:layout_width="match_parent"

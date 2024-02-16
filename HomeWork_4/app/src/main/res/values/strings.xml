@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Fourth HW</string>
+    <string name="app_name">UserProfile</string>
     <string name="photo">Photo</string>
     <string name="helper_input_name">Имя</string>
     <string name="helper_input_phone">Телефон</string>
