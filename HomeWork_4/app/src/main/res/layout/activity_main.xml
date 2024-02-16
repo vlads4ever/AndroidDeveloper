@@ -91,12 +91,14 @@
             android:id="@+id/notification_authorization"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/MyCheckBox"
             android:text="@string/authorization_on_the_device" />
 
         <CheckBox
             android:id="@+id/notification_new_products"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/MyCheckBox"
             android:text="@string/new_products_and_offers" />
 
         <LinearLayout
@@ -109,6 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="start"
                 android:text="@string/score" />
 
             <TextView
@@ -117,6 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
+                android:textColor="@color/dark_grey"
                 android:text="@string/count_score" />
 
         </LinearLayout>
@@ -127,7 +131,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/margin_for_activity"
-            android:progress="44" />
+            android:progress="50" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/save_button"

@@ -48,6 +48,10 @@
         <item name="buttonTint">@color/grey</item>
     </style>
 
+    <style name="MyCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="buttonTint">@color/purple_400</item>
+    </style>
+
     <style name="MyThemeOverlay.App.Switch" parent="">
         <item name="colorSecondary">@color/purple_700</item>
         <item name="colorSecondaryVariant">@color/purple_100</item>

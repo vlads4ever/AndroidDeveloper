@@ -6,73 +6,53 @@ import android.widget.Toast
 import android.annotation.SuppressLint
 import androidx.core.widget.doOnTextChanged
 import com.example.userprofile.databinding.ActivityMainBinding
+import kotlin.random.Random
 
 
 class MainActivity : AppCompatActivity() {
-    private val progress = kotlin.random.Random.nextInt(101)
+    private val progress = Random.nextInt(101)
     private var _binding: ActivityMainBinding? = null
     private val binding: ActivityMainBinding
         get() {
             return _binding!!
         }
 
-    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        startProgram()
+        runProgram()
     }
 
     @SuppressLint("SetTextI18n")
-    private fun startProgram() {
-        checkButtonSave()
+    private fun runProgram() {
+        checkSaveButtonAvailability()
         checkNotification(false)
         binding.progressScores.progress = progress
         binding.countScores.text = progress.toString() + resources.getString(R.string.count_score)
-        changeEditNameText()
         changeEditPhoneText()
         changeChoiceNotifications()
         changeRadioButton()
         changeNotificationAuthorization()
     }
 
-    private fun changeEditNameText() {
-        binding.editNameText.doOnTextChanged { text, _, _, _ ->
-            if (text != null) {
-                binding.textInputNameLayout.isErrorEnabled = text.length > 40
-            }
-            checkButtonSave()
-        }
-    }
-
-    private fun changeNotificationAuthorization() {
-        binding.notificationAuthorization.setOnCheckedChangeListener { _, _ ->
-            checkButtonSave()
-        }
-
-        binding.notificationNewProducts.setOnCheckedChangeListener { _, _ ->
-            checkButtonSave()
+    private fun changeEditPhoneText() {
+        binding.editPhoneText.doOnTextChanged { _, _, _, _ ->
+            checkSaveButtonAvailability()
         }
     }
 
     private fun changeRadioButton() {
         binding.radioGroup.setOnCheckedChangeListener { _, _ ->
-            checkButtonSave()
-        }
-    }
-
-    private fun changeEditPhoneText() {
-        binding.editPhoneText.doOnTextChanged { _, _, _, _ ->
-            checkButtonSave()
+            checkSaveButtonAvailability()
         }
     }
 
     private fun changeChoiceNotifications() {
         binding.enableNotifications.setOnCheckedChangeListener { _, isChecked ->
             checkNotification(isChecked)
-            checkButtonSave()
+            checkSaveButtonAvailability()
         }
     }
 
@@ -83,16 +63,15 @@ class MainActivity : AppCompatActivity() {
             binding.notificationAuthorization.isChecked = false
             binding.notificationNewProducts.isChecked = false
         }
-        checkButtonSave()
+        checkSaveButtonAvailability()
     }
 
     private fun checkInputName(): Boolean {
-        return !(binding.textInputNameLayout.isErrorEnabled || binding.editNameText.text.isNullOrEmpty())
+        return !(binding.editNameText.text.isNullOrEmpty())
     }
 
     private fun checkRadioButton(): Boolean {
-        if (binding.radioButtonMan.isChecked || binding.radioButtonWoman.isChecked) return true
-        return false
+        return binding.radioButtonMan.isChecked || binding.radioButtonWoman.isChecked
     }
 
     private fun checkNotifications(): Boolean {
@@ -105,9 +84,22 @@ class MainActivity : AppCompatActivity() {
         return false
     }
 
-    private fun checkButtonSave() {
+    private fun changeNotificationAuthorization() {
+        binding.notificationAuthorization.setOnCheckedChangeListener { _, _ ->
+            checkSaveButtonAvailability()
+        }
+
+        binding.notificationNewProducts.setOnCheckedChangeListener { _, _ ->
+            checkSaveButtonAvailability()
+        }
+    }
+
+    private fun checkSaveButtonAvailability() {
         binding.saveButton.isEnabled =
-            checkInputName() && !binding.editPhoneText.text.isNullOrEmpty() && checkRadioButton() && checkNotifications()
+            checkInputName() &&
+            !binding.editPhoneText.text.isNullOrEmpty() &&
+            checkRadioButton() &&
+            checkNotifications()
         if (binding.saveButton.isEnabled) pressButtonSave()
     }
 
