@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">My Quiz</string>
+    <string name="welcome_picture">Welcome picture</string>
+    <string name="continue_button">Продолжить</string>
+</resources>
