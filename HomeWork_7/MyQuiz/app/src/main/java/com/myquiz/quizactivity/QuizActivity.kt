@@ -28,12 +28,6 @@ class QuizActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
-
-//        navController.addOnDestinationChangedListener { controller, destination, arguments ->
-//            if (destination.id == R.id.ResultsFragment) {
-//                finish() // Закрыть текущую Activity
-//            }
-//        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
