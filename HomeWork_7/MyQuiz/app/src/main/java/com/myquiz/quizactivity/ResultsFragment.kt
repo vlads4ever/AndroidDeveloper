@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
 import com.myquiz.R
 import com.myquiz.databinding.FragmentResultsBinding
@@ -52,6 +53,11 @@ class ResultsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.resultsTextView.text = quizAnswers
+
+        // По нажатию на кнопку Назад произойдет закрытие активити квиза и возврат к стартовой активити
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            requireActivity().finish()
+        }
     }
 
     override fun onDestroyView() {

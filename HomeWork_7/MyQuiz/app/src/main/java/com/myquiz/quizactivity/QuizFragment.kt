@@ -78,7 +78,6 @@ class QuizFragment : Fragment() {
         return resultList
     }
 
-
     private fun inflateRadioGroup(): MutableList<RadioGroup> {
         radioGroupList.clear()
         val paddingDp = 16
@@ -107,17 +106,6 @@ class QuizFragment : Fragment() {
         }
         return radioGroupList
     }
-
-//    companion object {
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String) =
-//            QuizFragment().apply {
-//                arguments = Bundle().apply {
-//                    putString(ARG_PARAM1, param1)
-//                    putString(ARG_PARAM2, param2)
-//                }
-//            }
-//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -1,7 +1,6 @@
 package com.myquiz.quizactivity
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -30,7 +29,11 @@ class QuizActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-
+//        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+//            if (destination.id == R.id.ResultsFragment) {
+//                finish() // Закрыть текущую Activity
+//            }
+//        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
