@@ -89,6 +89,14 @@ class QuizFragment : Fragment() {
             var answerId = 0
             radioGroup = RadioGroup(this.context)
             radioGroup.orientation = RadioGroup.VERTICAL
+
+            // Анимация появления элементов radioGroup
+            radioGroup.alpha = 0f
+            radioGroup.animate().apply {
+                duration = 2000
+                alphaBy(1f)
+            }
+
             val questionText = TextView(this.context)
             questionText.text = questions[question].question
             questionText.id = View.generateViewId()

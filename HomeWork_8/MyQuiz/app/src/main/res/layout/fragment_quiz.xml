@@ -45,7 +45,10 @@
         app:barrierDirection="top"
         app:constraint_referenced_ids="back_button,send_button"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@drawable/button_ripple_effect"
         android:id="@+id/back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -56,7 +59,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/barrier" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@drawable/button_ripple_effect"
         android:id="@+id/send_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

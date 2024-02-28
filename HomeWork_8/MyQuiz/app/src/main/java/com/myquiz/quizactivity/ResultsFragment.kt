@@ -1,10 +1,12 @@
 package com.myquiz.quizactivity
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateInterpolator
 import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
 import com.myquiz.R
@@ -53,6 +55,15 @@ class ResultsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.resultsTextView.text = quizAnswers
+
+        // Создание анимации появления результата
+        ObjectAnimator.ofFloat(binding.resultsTextView,
+            View.TRANSLATION_Y,
+            -1500f, 0f).apply {
+            duration = 2000
+            interpolator = AccelerateInterpolator()
+            start()
+        }
 
         // По нажатию на кнопку Назад произойдет закрытие активити квиза и возврат к стартовой активити
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
