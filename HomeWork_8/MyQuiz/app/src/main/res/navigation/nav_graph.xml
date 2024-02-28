@@ -13,7 +13,9 @@
 
         <action
             android:id="@+id/action_QuizFragment_to_ResultsFragment"
-            app:destination="@id/ResultsFragment" />
+            app:destination="@id/ResultsFragment"
+            app:enterAnim="@anim/slide_in_up"
+            app:exitAnim="@anim/slide_out_up"/>
     </fragment>
     <fragment
         android:id="@+id/ResultsFragment"
@@ -23,6 +25,8 @@
 
         <action
             android:id="@+id/action_ResultsFragment_to_QuizFragment"
-            app:destination="@id/QuizFragment" />
+            app:destination="@id/QuizFragment"
+            app:enterAnim="@anim/slide_in_up"
+            app:exitAnim="@anim/slide_out_up" />
     </fragment>
 </navigation>
