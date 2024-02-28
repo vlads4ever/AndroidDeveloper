@@ -7,7 +7,6 @@
     android:propertyName="textColor"
     android:valueFrom="@color/white"
     android:valueTo="@color/red"
-    android:valueType="colorType"
-    >
+    android:valueType="colorType" >
 
 </objectAnimator>
