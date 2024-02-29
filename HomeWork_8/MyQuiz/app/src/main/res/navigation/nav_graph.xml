@@ -26,7 +26,7 @@
         <action
             android:id="@+id/action_ResultsFragment_to_QuizFragment"
             app:destination="@id/QuizFragment"
-            app:enterAnim="@anim/slide_in_up"
-            app:exitAnim="@anim/slide_out_up" />
+            app:enterAnim="@anim/slide_in_down"
+            app:exitAnim="@anim/slide_out_down" />
     </fragment>
 </navigation>
