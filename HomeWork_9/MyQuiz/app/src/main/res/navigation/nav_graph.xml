@@ -15,7 +15,7 @@
             android:id="@+id/action_QuizFragment_to_ResultsFragment"
             app:destination="@id/ResultsFragment"
             app:enterAnim="@anim/slide_in_up"
-            app:exitAnim="@anim/slide_out_up"/ >
+            app:exitAnim="@anim/slide_out_up"/>
     </fragment>
     <fragment
         android:id="@+id/ResultsFragment"

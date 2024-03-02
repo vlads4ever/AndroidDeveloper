@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Quiz</string>
+
+    <string name="welcome_picture">Картинка: Добро пожаловать!</string>
+    <string name="results_text">Результаты опроса</string>
+
+    <string name="continue_button">Продолжить</string>
+    <string name="birthday_button">Дата рождения</string>
+    <string name="back_button_text">Назад</string>
+    <string name="send_button_text">Отправить</string>
+    <string name="again_button_text">Начать заново</string>
+
+    <string name="quiz_fragment_label">Квиз!</string>
+    <string name="results_fragment_label">Результаты</string>
+
+    <string name="not_all_is_marked">Вы ответили не на все вопросы!</string>
+    <string name="choose_the_date_dialog_title">Введите дату рождения</string>
+</resources>

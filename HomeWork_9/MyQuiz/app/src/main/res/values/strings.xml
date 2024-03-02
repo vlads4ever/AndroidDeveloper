@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name" translatable="false">My Quiz</string>
+
+    <string name="welcome_picture">Picture Welcome!</string>
+    <string name="results_text">Quiz results</string>
+
+    <string name="continue_button">Continue</string>
+    <string name="birthday_button">Birthdate</string>
+    <string name="back_button_text">Back</string>
+    <string name="send_button_text">Send</string>
+    <string name="again_button_text">Start again</string>
+
+    <string name="quiz_fragment_label">Quiz!</string>
+    <string name="results_fragment_label">Results</string>
+
+    <string name="not_all_is_marked">You haven\'t answered all the questions!</string>
+    <string name="choose_the_date_dialog_title">Input birthdate</string>
+
+</resources>
