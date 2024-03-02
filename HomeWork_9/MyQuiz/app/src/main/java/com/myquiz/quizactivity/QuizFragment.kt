@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.quizapplicationskillbox.quiz.QuizStorage
 import com.myquiz.R
 import com.myquiz.databinding.FragmentQuizBinding
+import java.util.Locale
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -28,6 +29,12 @@ class QuizFragment : Fragment() {
     private var _binding: FragmentQuizBinding? = null
     private var results: MutableList<Int> = mutableListOf()
     private var radioGroupList: MutableList<RadioGroup> = mutableListOf()
+
+    private val quizLocale = when (Locale.getDefault().language) {
+        "en" -> QuizStorage.Locale.En
+        "ru" -> QuizStorage.Locale.Ru
+        else -> QuizStorage.Locale.En
+    }
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -61,7 +68,7 @@ class QuizFragment : Fragment() {
                 Toast.makeText(this.context, getText(R.string.not_all_is_marked), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            val quizAnswers = QuizStorage.answer(QuizStorage.getQuiz(QuizStorage.Locale.Ru), results)
+            val quizAnswers = QuizStorage.answer(QuizStorage.getQuiz(quizLocale), results)
             bundle.putString("quizAnswers", quizAnswers)
             findNavController().navigate(R.id.action_QuizFragment_to_ResultsFragment, args = bundle)
         }
@@ -84,7 +91,7 @@ class QuizFragment : Fragment() {
         val paddingPx = (resources.displayMetrics.density * paddingDp + 0.5F).toInt()
         var radioGroup: RadioGroup
         val linearLayout = binding.linearLayout
-        val questions = QuizStorage.getQuiz(QuizStorage.Locale.Ru).questions
+        val questions = QuizStorage.getQuiz(quizLocale).questions
         for (question in questions.indices) {
             var answerId = 0
             radioGroup = RadioGroup(this.context)
