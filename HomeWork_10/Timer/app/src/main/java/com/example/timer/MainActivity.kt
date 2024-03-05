@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                 binding.progressBar.progress = userNumber
                 binding.actionButton.setText(R.string.start_timer)
                 binding.sliderBar.isEnabled = true
-                Toast.makeText(this, "Таймер остановлен", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Timer has stopped", Toast.LENGTH_SHORT).show()
 
             }
             is AppState.Finish -> {
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                 binding.progressBar.progress = userNumber
                 binding.actionButton.setText(R.string.start_timer)
                 binding.sliderBar.isEnabled = true
-                Toast.makeText(this, "Таймер завершен", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Timer has ended", Toast.LENGTH_SHORT).show()
             }
             is AppState.UpdateProgress -> {
                 binding.timerNumber.text = timerValue.toString()
