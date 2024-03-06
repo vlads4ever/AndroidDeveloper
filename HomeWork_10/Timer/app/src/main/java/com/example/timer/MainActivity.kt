@@ -11,9 +11,12 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-const val TIMER_PROGRESS = "timerProgress"
+private const val TIMER_PROGRESS = "timerProgress"
+private const val RUNNING_STATUS = "runningStatus"
+private const val COUNTDOWN = "userNumber"
+
 class MainActivity : AppCompatActivity() {
-    private var userNumber = 0
+    private var userNumber = 20
     private var job: Job? = null
     private var isRunning = false
     private lateinit var binding: ActivityMainBinding
@@ -25,12 +28,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         savedInstanceState?.let {
             timerValue = it.getInt(TIMER_PROGRESS)
-            Toast.makeText(this, "$timerValue", Toast.LENGTH_SHORT).show()
-            if (timerValue != null) {
-                isRunning = false
-                updateUI(AppState.Prepare())
+            isRunning = it.getBoolean(RUNNING_STATUS)
+            userNumber = it.getInt(COUNTDOWN)
+            if (isRunning) {
+                updateUI(AppState.Continue())
                 actionTimer(timerValue!!)
                 timerValue = null
+            } else {
+                updateUI(AppState.Prepare())
             }
         }
 
@@ -44,6 +49,8 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         job?.cancel()
         if (timerValue != null) outState.putInt(TIMER_PROGRESS, timerValue!!)
+        outState.putBoolean(RUNNING_STATUS, isRunning)
+        outState.putInt(COUNTDOWN, userNumber)
         super.onSaveInstanceState(outState)
     }
 
@@ -52,9 +59,8 @@ class MainActivity : AppCompatActivity() {
             is AppState.Prepare -> {
                 userNumber = binding.sliderBar.value.toInt()
                 binding.timerNumber.text = userNumber.toString()
-                binding.progressBar.max = binding.sliderBar.value.toInt()
-                binding.progressBar.progress = binding.sliderBar.value.toInt()
-                isRunning = false
+                binding.progressBar.max = userNumber
+                binding.progressBar.progress = userNumber
             }
             is AppState.Run -> {
                 isRunning = true
@@ -68,7 +74,6 @@ class MainActivity : AppCompatActivity() {
                 binding.actionButton.setText(R.string.start_timer)
                 binding.sliderBar.isEnabled = true
                 Toast.makeText(this, "Timer has stopped", Toast.LENGTH_SHORT).show()
-
             }
             is AppState.Finish -> {
                 isRunning = false
@@ -82,9 +87,14 @@ class MainActivity : AppCompatActivity() {
                 binding.timerNumber.text = timerValue.toString()
                 binding.progressBar.progress = timerValue.toString().toInt()
             }
+            is AppState.Continue -> {
+                binding.timerNumber.text = this@MainActivity.timerValue.toString()
+                binding.progressBar.max = userNumber
+                binding.progressBar.progress = this@MainActivity.timerValue!!
+                isRunning = false
+            }
         }
     }
-
 
     private fun actionTimer(countNumber: Int) {
         if (!isRunning) {
@@ -104,12 +114,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     sealed class AppState {
-        class Stop : AppState()
-        class Run : AppState()
-        class Finish : AppState()
-        class Prepare : AppState()
-        class UpdateProgress : AppState()
+        class Stop: AppState()
+        class Run: AppState()
+        class Finish: AppState()
+        class Prepare: AppState()
+        class UpdateProgress: AppState()
+        class Continue: AppState()
     }
 }
