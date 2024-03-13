@@ -11,10 +11,10 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
+import com.example.finder.MainViewModelFactory
 import com.example.finder.State
 
 import com.example.finder.databinding.FragmentMainBinding
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class MainFragment : Fragment() {
@@ -23,14 +23,8 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels { MainViewModelFactory()}
     private lateinit var binding: FragmentMainBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,10 +73,10 @@ class MainFragment : Fragment() {
                 binding.findButton.isEnabled = buttonIsEnabled
             }
         }
+    }
 
-        fun View.hideKeyboard() {
-            val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(windowToken, 0)
-        }
+    private fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 }
