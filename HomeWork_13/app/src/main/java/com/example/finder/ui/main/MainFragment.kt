@@ -29,50 +29,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-
-//        binding.finderField.doOnTextChanged { text, _, _, _ ->
-//            viewModel.onEditTextChanged(text?.length!!)
-//        }
-
-//        binding.findButton.setOnClickListener {
-//            this.view?.hideKeyboard()
-//            viewModel.onFindButtonClick(binding.finderField.text.toString())
-//        }
-
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            viewModel.state.collect { state ->
-//                when (state) {
-//                    is State.Finish -> {
-//                        val searchResult = "По запросу ${state.searchText} ничего не найдено."
-//                        binding.outputTextview.text = searchResult
-//                        binding.progressBar.isVisible = false
-//                        binding.findButton.isEnabled = false
-//                    }
-//                    State.Loading -> {
-//                        binding.finderField.text = null
-//                        binding.findButton.isEnabled = false
-//                        binding.progressBar.isVisible = true
-//                    }
-//                    State.Waiting -> {
-//                        binding.findButton.isEnabled = false
-//                        binding.progressBar.isVisible = false
-//                    }
-//                }
-//            }
-//        }
-
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            viewModel.buttonVisibility.collect { buttonIsEnabled ->
-//                binding.findButton.isEnabled = buttonIsEnabled
-//            }
-//        }
     }
-
-//    private fun View.hideKeyboard() {
-//        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//        imm.hideSoftInputFromWindow(windowToken, 0)
-//    }
 }

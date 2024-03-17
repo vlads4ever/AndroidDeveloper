@@ -1,16 +1,16 @@
 package com.example.finder.ui.main
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finder.Repository
 import com.example.finder.State
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val repository: Repository
@@ -18,44 +18,28 @@ class MainViewModel(
     private val _state = MutableStateFlow<State>(State.Waiting)
     val state = _state.asStateFlow()
 
-    private val _searchString = MutableStateFlow<String>("")
-    lateinit var searchString: String
-    val job = _searchString.debounce(300).onEach{
+    private val searchingString = MutableStateFlow<String>("")
+    private var searchJob: Job? = null
 
-    }.launchIn(viewModelScope)
+    private suspend fun searchString() {
+        _state.value = State.Loading
+        val result = repository.find(searchingString.value)
+        _state.value = State.Finish(result)
+    }
 
-//    private val _buttonVisibility = Channel<Boolean>()
-//    val buttonVisibility = _buttonVisibility.receiveAsFlow()
-
-//    fun onEditTextChanged(length: Int) {
-//        viewModelScope.launch {
-//            _buttonVisibility.send(length >= 3)
-//        }
-//    }
-
-    fun onEditTextChanged(searchText: String) {
-        viewModelScope.launch {
-
-            _searchString.debounce(300).onEach{}.launchIn(viewModelScope)
-            _searchString.value = searchText
-            findText(searchString)
+    @OptIn(FlowPreview::class)
+    fun onEditTextChanged(str: String) {
+        searchJob?.cancel()
+        if (str.length < 3)
+            _state.value = State.Waiting
+        else {
+            searchingString.value = str
+            searchJob = searchingString
+                .debounce(1000)
+                .onEach {
+                    searchString()
+                }.launchIn(viewModelScope)
         }
     }
 
-    fun findText(searchText: String) {
-        viewModelScope.launch {
-            _state.value = State.Loading
-            val result = repository.find(searchText)
-            _state.value = State.Finish(result)
-        }
-    }
-
-
-    fun onFindButtonClick(searchText: String) {
-        viewModelScope.launch {
-            _state.value = State.Loading
-            val result = repository.find(searchText)
-            _state.value = State.Finish(result)
-        }
-    }
 }
