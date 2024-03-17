@@ -23,8 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/hint_input_edit_text"
-                android:onTextChanged="@{() -> viewModel.onEditTextChanged(finderField.getText().toString())}"
-                android:enabled="@{viewModel.state != State.Loading.INSTANCE}" />
+                android:onTextChanged="@{() -> viewModel.onEditTextChanged(finderField.getText().toString())}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView

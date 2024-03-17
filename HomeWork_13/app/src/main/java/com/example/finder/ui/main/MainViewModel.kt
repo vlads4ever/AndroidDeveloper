@@ -35,7 +35,7 @@ class MainViewModel(
         else {
             searchingString.value = str
             searchJob = searchingString
-                .debounce(1000)
+                .debounce(300)
                 .onEach {
                     searchString()
                 }.launchIn(viewModelScope)
