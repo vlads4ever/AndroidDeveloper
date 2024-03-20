@@ -6,8 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.example.userjsongetter.R
+
+import com.example.userjsongetter.databinding.FragmentMainBinding
+import com.example.userjsongetter.model.UserModel.UserModel
+import kotlinx.coroutines.launch
+
+private const val USER_MODEL = "userModel"
 
 class MainFragment : Fragment() {
 
@@ -15,19 +23,59 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
 
-    private val viewModel: MainViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
+    private val viewModel: MainViewModel by viewModels { MainViewModelFactory() }
+    private lateinit var binding: FragmentMainBinding
+    private var userModel: UserModel? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        binding = FragmentMainBinding.inflate(inflater, container, false)
+        savedInstanceState?.let {
+            userModel = it.getParcelable(USER_MODEL)
+        }
+
+        if (userModel == null) {
+            lifecycleScope.launch {
+                try {
+                    userModel = viewModel.getJson()
+                    updateUi(userModel!!)
+                } catch (e: Exception) {
+                    Toast.makeText(requireActivity(), "${e.message}", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        } else {
+            updateUi(userModel!!)
+        }
+
+        binding.button.setOnClickListener {
+            lifecycleScope.launch {
+                try {
+                    userModel = viewModel.getJson()
+                    updateUi(userModel!!)
+                } catch (e: Exception) {
+                    Toast.makeText(requireActivity(), "${e.message}", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
+
+        return binding.root
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        if (userModel != null) outState.putParcelable(USER_MODEL, userModel)
+        super.onSaveInstanceState(outState)
+    }
+
+    private fun updateUi(userModel: UserModel) {
+        binding.nameField.text = getString(R.string.user_info,
+            userModel.firstName,
+            userModel.lastName,
+            userModel.birthday,
+            userModel.email)
+        Glide.with(this).load(userModel.photoUrl).fitCenter().into(binding.imageView)
+    }
 }

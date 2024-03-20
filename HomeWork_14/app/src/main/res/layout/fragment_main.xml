@@ -8,21 +8,22 @@
     tools:context=".ui.main.MainFragment">
 
     <ImageView
-        android:scaleType="fitCenter"
         android:id="@+id/imageView"
         android:layout_width="0dp"
-        android:layout_height="300dp"
+        android:layout_height="200dp"
+        android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/name_field" />
+        app:layout_constraintBottom_toTopOf="@id/name_field"
+        tools:src="@tools:sample/avatars"/>
 
     <TextView
         android:id="@+id/name_field"
-        android:textAlignment="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Информация об объекте"
+        android:textAlignment="center"
+        android:text="Информация \n о \n пользователе \n будет здесь."
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
