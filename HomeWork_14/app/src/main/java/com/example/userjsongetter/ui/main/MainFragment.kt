@@ -2,6 +2,7 @@ package com.example.userjsongetter.ui.main
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -44,6 +45,7 @@ class MainFragment : Fragment() {
                 } catch (e: Exception) {
                     Toast.makeText(requireActivity(), "${e.message}", Toast.LENGTH_SHORT)
                         .show()
+                    Log.d("TAG", e.message.toString())
                 }
             }
         } else {
@@ -58,6 +60,7 @@ class MainFragment : Fragment() {
                 } catch (e: Exception) {
                     Toast.makeText(requireActivity(), "${e.message}", Toast.LENGTH_SHORT)
                         .show()
+                    Log.d("TAG", e.message.toString())
                 }
             }
         }
@@ -74,7 +77,7 @@ class MainFragment : Fragment() {
         binding.nameField.text = getString(R.string.user_info,
             userModel.firstName,
             userModel.lastName,
-            userModel.birthday,
+            userModel.birthday?.slice(0..9),
             userModel.email)
         Glide.with(this).load(userModel.photoUrl).fitCenter().into(binding.imageView)
     }

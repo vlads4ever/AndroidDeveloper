@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">User Json Getter</string>
     <string name="renew">Обновить</string>
-    <string name="user_info">%1$s %2$s \n %3$s \n %4$s</string>
+    <string name="user_info">Имя: %1$s %2$s \n Дата рождения: %3$s \n Email: %4$s</string>
 </resources>
