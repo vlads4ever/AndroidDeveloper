@@ -2,19 +2,16 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
 
-    // Parcelize
-    id("org.jetbrains.kotlin.plugin.parcelize")
-
     //To use Kotlin Symbol Processing (KSP) and see build.gradle.kts(Module)
     id("com.google.devtools.ksp")
 }
 
 android {
-    namespace = "com.example.userjsongetter"
+    namespace = "com.example.wordsdatabase"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.userjsongetter"
+        applicationId = "com.example.wordsdatabase"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -39,9 +36,6 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        viewBinding = true
-    }
 }
 
 dependencies {
@@ -49,7 +43,6 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
@@ -58,15 +51,8 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    // Glide
-    implementation("com.github.bumptech.glide:glide:4.16.0")
-
-    //Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.10.0")
-
-    // Moshi
-    implementation("com.squareup.moshi:moshi:1.15.1")
-    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
-    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
-    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
+    // Room
+    implementation("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+    ksp("androidx.room:room-compiler:2.6.1")
 }
