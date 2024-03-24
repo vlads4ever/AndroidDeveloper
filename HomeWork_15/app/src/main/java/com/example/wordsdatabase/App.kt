@@ -10,10 +10,10 @@ class App: Application() {
     override fun onCreate() {
         super.onCreate()
 
-        db = Room.inMemoryDatabaseBuilder(
+        db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java,
-//            "db"
+            "words.db"
         ).build()
     }
 }
