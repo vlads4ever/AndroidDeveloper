@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
+import com.example.wordsdatabase.R
 
 import com.example.wordsdatabase.Repository
 import com.example.wordsdatabase.databinding.FragmentMainBinding
@@ -21,7 +22,17 @@ import kotlinx.coroutines.launch
 class MainFragment : Fragment() {
     private lateinit var binding: FragmentMainBinding
     private lateinit var currentWordsList: List<Word>
-
+    private val viewModel: MainViewModel by viewModels {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+                    return MainViewModel(Repository(context?.applicationContext)) as T
+                } else {
+                    throw IllegalArgumentException("")
+                }
+            }
+        }
+    }
     companion object {
         fun newInstance() = MainFragment()
     }
@@ -44,7 +55,7 @@ class MainFragment : Fragment() {
                 }
                 false -> Toast.makeText(
                     requireContext(),
-                    "Неверный формат: допустимы только буквы и тире.",
+                    getString(R.string.wrong_format),
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -67,17 +78,5 @@ class MainFragment : Fragment() {
         }
 
         return binding.root
-    }
-
-    private val viewModel: MainViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-                    return MainViewModel(Repository(context?.applicationContext)) as T
-                } else {
-                    throw IllegalArgumentException("")
-                }
-            }
-        }
     }
 }

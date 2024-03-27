@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import com.example.wordsdatabase.Repository
 import com.example.wordsdatabase.model.Word
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.forEach
 
 class MainViewModel(
     private val repository: Repository

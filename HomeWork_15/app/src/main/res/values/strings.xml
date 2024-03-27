@@ -3,4 +3,6 @@
     <string name="edit_text_hint">Введите слово</string>
     <string name="add_button_text">Добавить</string>
     <string name="clear_button_text">Очистить</string>
+    <string name="title">Список слов (повторений):</string>
+    <string name="wrong_format">Неверный формат: допустимы только буквы и тире.</string>
 </resources>
