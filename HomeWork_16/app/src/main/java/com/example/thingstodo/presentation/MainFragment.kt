@@ -16,7 +16,8 @@ import kotlinx.coroutines.launch
 private const val USEFUL_ACTIVITY = "usefulActivity"
 
 class MainFragment : Fragment() {
-    private lateinit var binding: FragmentMainBinding
+    private var _binding: FragmentMainBinding? = null
+    private val binding get() = _binding!!
     private var usefulActivity: String? = null
     private val viewModel: MainViewModel by viewModels {
         DaggerAppComponent.create().mainViewModelFactory()
@@ -30,7 +31,12 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMainBinding.inflate(layoutInflater)
+        _binding = FragmentMainBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         savedInstanceState?.let {
             usefulActivity = it.getString(USEFUL_ACTIVITY)
@@ -55,12 +61,15 @@ class MainFragment : Fragment() {
                 }
             }
         }
-
-        return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         if (usefulActivity != null) outState.putString(USEFUL_ACTIVITY, usefulActivity)
         super.onSaveInstanceState(outState)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

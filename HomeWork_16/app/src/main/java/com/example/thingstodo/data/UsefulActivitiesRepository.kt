@@ -30,8 +30,6 @@ class UsefulActivitiesRepository @Inject constructor(){
             receivedUsefulActivity.getUsefulActivity().body()?.key,
             receivedUsefulActivity.getUsefulActivity().body()?.accessibility
         )
-        Log.d("Interface:", usefulActivity.activity.toString())
-        Log.d("Interface:", usefulActivity.toString())
         return usefulActivity
     }
 }

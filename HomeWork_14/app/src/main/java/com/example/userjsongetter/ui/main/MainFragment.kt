@@ -19,15 +19,14 @@ import kotlinx.coroutines.launch
 private const val USER_MODEL = "userModel"
 
 class MainFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = MainFragment()
-    }
-
     private val viewModel: MainViewModel by viewModels { MainViewModelFactory() }
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
     private var userModel: UserModel? = null
+
+    companion object {
+        fun newInstance() = MainFragment()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
