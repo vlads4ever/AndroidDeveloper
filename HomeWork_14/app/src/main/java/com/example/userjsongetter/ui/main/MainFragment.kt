@@ -25,14 +25,21 @@ class MainFragment : Fragment() {
     }
 
     private val viewModel: MainViewModel by viewModels { MainViewModelFactory() }
-    private lateinit var binding: FragmentMainBinding
+    private var _binding: FragmentMainBinding? = null
+    private val binding get() = _binding!!
     private var userModel: UserModel? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMainBinding.inflate(inflater, container, false)
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         savedInstanceState?.let {
             userModel = it.getParcelable(USER_MODEL)
         }
@@ -65,7 +72,6 @@ class MainFragment : Fragment() {
             }
         }
 
-        return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
