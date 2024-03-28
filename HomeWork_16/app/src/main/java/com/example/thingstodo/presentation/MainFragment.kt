@@ -45,11 +45,11 @@ class MainFragment : Fragment() {
                 viewModel.reloadUsefulActivity()
                 viewModel.activityFlow.collect { state ->
                     when (state) {
-                        is State.Failure -> {
-                            this@MainFragment.usefulActivity = state.value
-                            binding.usefulActivityTextView.text = this@MainFragment.usefulActivity
+                        is State.Failure -> binding.usefulActivityTextView.text = state.value
+                        is State.Success -> {
+                            usefulActivity = state.value
+                            binding.usefulActivityTextView.text = usefulActivity
                         }
-                        is State.Success -> binding.usefulActivityTextView.text = state.value
                         null -> ""
                     }
                 }
