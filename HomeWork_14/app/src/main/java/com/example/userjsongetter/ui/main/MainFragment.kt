@@ -86,4 +86,10 @@ class MainFragment : Fragment() {
             userModel.email)
         Glide.with(this).load(userModel.photoUrl).fitCenter().into(binding.imageView)
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }
