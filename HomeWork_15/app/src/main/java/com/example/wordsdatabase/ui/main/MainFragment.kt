@@ -20,7 +20,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainFragment : Fragment() {
-    private lateinit var binding: FragmentMainBinding
+    private var _binding: FragmentMainBinding? = null
+    private val binding get() = _binding!!
     private lateinit var currentWordsList: List<Word>
     private val viewModel: MainViewModel by viewModels {
         object : ViewModelProvider.Factory {
@@ -33,6 +34,7 @@ class MainFragment : Fragment() {
             }
         }
     }
+
     companion object {
         fun newInstance() = MainFragment()
     }
@@ -41,7 +43,12 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMainBinding.inflate(layoutInflater)
+        _binding = FragmentMainBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.addButton.setOnClickListener {
             val matching = Regex("[a-zA-Zа-яА-Я-']+").matches(binding.editText.text)
@@ -75,8 +82,7 @@ class MainFragment : Fragment() {
                     wordsInfo += "${word.value} (${word.repetition})\n"
                 }
                 binding.viewWordsList.text = wordsInfo
-        }
-
-        return binding.root
+            }
     }
+
 }
