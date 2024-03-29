@@ -59,14 +59,14 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     // Glide
-    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation(libs.glide)
 
     //Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.10.0")
+    implementation(libs.retrofit)
 
     // Moshi
-    implementation("com.squareup.moshi:moshi:1.15.1")
-    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
-    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
-    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
+    implementation(libs.moshi)
+    ksp(libs.moshi.kotlin.codegen)
+    implementation(libs.converter.moshi)
+    implementation(libs.moshi.kotlin)
 }
