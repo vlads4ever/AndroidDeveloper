@@ -21,12 +21,21 @@ class Repository(applicationContext: Context?) {
         .build()
 
     val getMarsPhotos: MarsPhotosApi = retrofit.create(MarsPhotosApi::class.java)
+    val getMarsPhotosByDate: MarsPhotosByDateApi = retrofit.create(MarsPhotosByDateApi::class.java)
 }
 
 interface MarsPhotosApi {
     @GET("/mars-photos/api/v1/rovers/curiosity/photos")
     suspend fun getPictures(
         @Query("sol") sol: Int,
+        @Query("api_key") apiKey: String
+    ): Response<Results>?
+}
+
+interface MarsPhotosByDateApi {
+    @GET("/mars-photos/api/v1/rovers/curiosity/photos")
+    suspend fun getPictures(
+        @Query("earth_date") earthDate: String,
         @Query("api_key") apiKey: String
     ): Response<Results>?
 }

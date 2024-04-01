@@ -21,15 +21,17 @@ import com.example.marsroverphotos.databinding.FragmentMainBinding
 import kotlinx.coroutines.launch
 
 private const val PHOTO = "photo"
+private const val DATE = "date"
 
 class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding?  = null
     private val binding get() = _binding!!
+    private var data: String? = null
     private val viewModel: MainViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-                    return MainViewModel(Repository(context?.applicationContext)) as T
+                    return MainViewModel(Repository(context?.applicationContext), data) as T
                 } else {
                     throw IllegalArgumentException("")
                 }
@@ -48,6 +50,10 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        arguments?.let {
+            data = it.getString(DATE)
+        }
+
         val pictureAdapter = PictureAdapter(requireContext()) { photo -> onClick(photo!!) }
         binding.pictureRecycler.adapter = pictureAdapter
         binding.pictureRecycler.layoutManager = LinearLayoutManager(
@@ -55,6 +61,11 @@ class MainFragment : Fragment() {
             LinearLayoutManager.VERTICAL,
             false
         )
+
+        binding.settingsButton.setOnClickListener {
+            findNavController()
+                .navigate(resId = R.id.action_mainFragment_to_settingFragment, args = null)
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getPhotosList()

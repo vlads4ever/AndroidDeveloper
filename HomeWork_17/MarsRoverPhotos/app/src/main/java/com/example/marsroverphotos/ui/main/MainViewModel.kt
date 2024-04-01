@@ -1,5 +1,6 @@
 package com.example.marsroverphotos.ui.main
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.marsroverphotos.repository.Repository
@@ -13,7 +14,10 @@ import retrofit2.Response
 private const val API_KEY = "qT6TEfQCcxZ88ea5dYODQDC48PTICRfRHFkXqF4y"
 private const val SOL = 1000
 
-class MainViewModel(val repository: Repository) : ViewModel() {
+class MainViewModel(
+    private val repository: Repository,
+    private val date: String? = null
+) : ViewModel() {
 
     private var _photosStateFlow = MutableStateFlow<Response<Results>?>(null)
     val photosStateFlow = _photosStateFlow.asStateFlow()
@@ -23,7 +27,11 @@ class MainViewModel(val repository: Repository) : ViewModel() {
     suspend fun getPhotosList() {
         viewModelScope.launch(Dispatchers.IO) {
             kotlin.runCatching {
-                repository.getMarsPhotos.getPictures(SOL, API_KEY)
+                if (date != null) {
+                    repository.getMarsPhotosByDate.getPictures(date, API_KEY)
+                } else {
+                    repository.getMarsPhotos.getPictures(SOL, API_KEY)
+                }
             }.fold(
                 onSuccess = { _photosStateFlow.value = it },
                 onFailure = { _errorMessageFlow.value = it.message }

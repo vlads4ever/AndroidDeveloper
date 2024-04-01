@@ -12,11 +12,29 @@
         tools:layout="@layout/fragment_main" >
         <action
             android:id="@+id/action_mainFragment_to_pictureFragment"
-            app:destination="@id/pictureFragment" />
+            app:destination="@id/pictureFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_mainFragment_to_settingFragment"
+            app:destination="@id/settingFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/pictureFragment"
         android:name="com.example.marsroverphotos.ui.main.PictureFragment"
         android:label="fragment_picture"
         tools:layout="@layout/fragment_picture" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.marsroverphotos.ui.main.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" >
+        <action
+            android:id="@+id/action_settingFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
 </navigation>
