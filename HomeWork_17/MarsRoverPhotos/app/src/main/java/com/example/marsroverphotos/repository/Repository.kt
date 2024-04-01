@@ -1,6 +1,7 @@
-package com.example.m17_recyclerview.ui.main
+package com.example.marsroverphotos.repository
 
 import android.content.Context
+import com.example.marsroverphotos.model.Results
 import com.squareup.moshi.Moshi
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -26,6 +27,6 @@ interface MarsPhotosApi {
     @GET("/mars-photos/api/v1/rovers/curiosity/photos")
     suspend fun getPictures(
         @Query("sol") sol: Int,
-        @Query("api_key") api_key: String
+        @Query("api_key") apiKey: String
     ): Response<Results>?
 }

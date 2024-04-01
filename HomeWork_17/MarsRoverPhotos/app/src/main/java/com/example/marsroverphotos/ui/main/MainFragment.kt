@@ -13,8 +13,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.m17_recyclerview.ui.main.Photo
-import com.example.m17_recyclerview.ui.main.Repository
+import com.example.marsroverphotos.model.Photo
+import com.example.marsroverphotos.repository.Repository
 
 import com.example.marsroverphotos.R
 import com.example.marsroverphotos.databinding.FragmentMainBinding
@@ -23,9 +23,8 @@ import kotlinx.coroutines.launch
 private const val PHOTO = "photo"
 
 class MainFragment : Fragment() {
-
-    private lateinit var binding: FragmentMainBinding
-
+    private var _binding: FragmentMainBinding?  = null
+    private val binding get() = _binding!!
     private val viewModel: MainViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -42,12 +41,16 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMainBinding.inflate(layoutInflater)
+        _binding = FragmentMainBinding.inflate(layoutInflater)
+        return binding.root
+    }
 
-        val photoAdapter = PictureAdapter(requireContext(), { photo -> onClick(photo!!) })
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        binding.photoRecycler.adapter = photoAdapter
-        binding.photoRecycler.layoutManager = LinearLayoutManager(
+        val pictureAdapter = PictureAdapter(requireContext()) { photo -> onClick(photo!!) }
+        binding.pictureRecycler.adapter = pictureAdapter
+        binding.pictureRecycler.layoutManager = LinearLayoutManager(
             requireContext(),
             LinearLayoutManager.VERTICAL,
             false
@@ -57,27 +60,30 @@ class MainFragment : Fragment() {
             viewModel.getPhotosList()
             viewModel.photosStateFlow.collect { results ->
                 Log.d("Fragment", (results == null).toString())
-                if (results != null) photoAdapter.setData(results)
+                if (results != null) pictureAdapter.setData(results)
             }
         }
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.errorMessageFlow.collect {error ->
                 if (error != null) Toast.makeText(
-                        requireContext(),
-                        error.toString(),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    requireContext(),
+                    error.toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
-
-        return binding.root
     }
 
-    fun onClick(photo: Photo) {
+    private fun onClick(photo: Photo) {
         val bundle = Bundle().apply {
             putParcelable(PHOTO, photo)
         }
         findNavController()
             .navigate(resId = R.id.action_mainFragment_to_pictureFragment, args = bundle)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

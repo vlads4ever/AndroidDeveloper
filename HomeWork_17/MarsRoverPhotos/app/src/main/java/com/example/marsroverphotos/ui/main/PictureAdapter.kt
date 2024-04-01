@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.m17_recyclerview.ui.main.Photo
-import com.example.m17_recyclerview.ui.main.Results
+import com.example.marsroverphotos.model.Photo
+import com.example.marsroverphotos.model.Results
 import com.example.marsroverphotos.R
 import com.example.marsroverphotos.databinding.PictureCardBinding
 import retrofit2.Response
@@ -15,24 +15,19 @@ import retrofit2.Response
 class PictureAdapter(
     private val context: Context,
     private val onClick: (Photo?) -> Unit
-) : RecyclerView.Adapter<PhotoHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoHolder {
-        val binding = PictureCardBinding.inflate(LayoutInflater.from(parent.context))
-        return PhotoHolder(binding)
-    }
-
+) : RecyclerView.Adapter<MyPictureViewHolder>() {
     private var results: Response<Results>? = null
 
-    fun setData(results: Response<Results>?) {
-        if (results != null) this.results = results
-        notifyDataSetChanged()
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyPictureViewHolder {
+        val binding = PictureCardBinding.inflate(LayoutInflater.from(parent.context))
+        return MyPictureViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
         return results?.body()?.photos?.size ?: 0
     }
 
-    override fun onBindViewHolder(holder: PhotoHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyPictureViewHolder, position: Int) {
         val currentPhoto: Photo? = results?.body()?.photos?.get(position)
         if (currentPhoto != null) {
             with(holder.binding) {
@@ -47,10 +42,16 @@ class PictureAdapter(
                 rover.text = context.getString(R.string.rover, currentPhoto.rover.name)
             }
         }
+
         holder.binding.root.setOnClickListener {
             onClick(results?.body()?.photos?.get(position))
         }
     }
+
+    fun setData(results: Response<Results>?) {
+        if (results != null) this.results = results
+        notifyDataSetChanged()
+    }
 }
 
-class PhotoHolder(val binding: PictureCardBinding) : RecyclerView.ViewHolder(binding.root)
+class MyPictureViewHolder(val binding: PictureCardBinding) : RecyclerView.ViewHolder(binding.root)

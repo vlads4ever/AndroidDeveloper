@@ -1,4 +1,4 @@
-package com.example.m17_recyclerview.ui.main
+package com.example.marsroverphotos.model
 
 import android.os.Parcelable
 import com.squareup.moshi.Json

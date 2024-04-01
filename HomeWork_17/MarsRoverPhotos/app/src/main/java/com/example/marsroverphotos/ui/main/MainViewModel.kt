@@ -2,8 +2,8 @@ package com.example.marsroverphotos.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.m17_recyclerview.ui.main.Repository
-import com.example.m17_recyclerview.ui.main.Results
+import com.example.marsroverphotos.repository.Repository
+import com.example.marsroverphotos.model.Results
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
