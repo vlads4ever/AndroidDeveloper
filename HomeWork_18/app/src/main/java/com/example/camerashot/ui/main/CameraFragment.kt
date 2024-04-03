@@ -76,6 +76,7 @@ class CameraFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        startCamera()
         binding.takeShotButton.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch {
                 takePhoto()
@@ -88,7 +89,6 @@ class CameraFragment : Fragment() {
             ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED
         }
         if (isAllGranted) {
-            startCamera()
             Toast.makeText(requireContext(), "Permission is Granted", Toast.LENGTH_SHORT).show()
         } else {
             launcher.launch(REQUEST_PERMISSION)

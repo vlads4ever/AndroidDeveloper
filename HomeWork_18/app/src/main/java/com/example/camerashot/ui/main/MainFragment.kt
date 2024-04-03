@@ -49,7 +49,7 @@ class MainFragment : Fragment() {
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = GridLayoutManager(
             requireContext(),
-            2,
+            3,
             GridLayoutManager.VERTICAL,
             false
         )
