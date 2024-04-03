@@ -13,8 +13,10 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.camerashot.data.Repository
 import com.example.camerashot.databinding.FragmentCameraBinding
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.concurrent.Executor
@@ -51,18 +53,10 @@ class CameraFragment : Fragment() {
 
         }
 
-    private fun startCamera() {
-        TODO("Not yet implemented")
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         executor = ContextCompat.getMainExecutor(requireContext())
         checkPermissions()
-    }
-
-    private fun checkPermissions() {
-        TODO("Not yet implemented")
     }
 
     override fun onCreateView(
@@ -71,6 +65,28 @@ class CameraFragment : Fragment() {
     ): View {
         _binding = FragmentCameraBinding.inflate(layoutInflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.takeShotButton.setOnClickListener {
+            viewLifecycleOwner.lifecycleScope.launch {
+                takePhoto()
+            }
+        }
+    }
+
+    private fun checkPermissions() {
+        if (ContextCompat.checkSelfPermission())
+    }
+    
+    private fun startCamera() {
+        TODO("Not yet implemented")
+    }
+
+    private fun takePhoto() {
+        TODO("Not yet implemented")
     }
 
     override fun onDestroy() {
