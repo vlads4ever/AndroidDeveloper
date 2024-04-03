@@ -25,7 +25,7 @@ class MainFragment : Fragment() {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 return if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-                    MainViewModel(Repository(context?.applicationContext)) as T
+                    MainViewModel(requireContext(), Repository(context?.applicationContext)) as T
                 } else {
                     throw IllegalArgumentException("")
                 }
@@ -44,12 +44,12 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = PhotoAdapter(requireContext())
+        val adapter = PhotoAdapter()
 
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = GridLayoutManager(
             requireContext(),
-            3,
+            2,
             GridLayoutManager.VERTICAL,
             false
         )

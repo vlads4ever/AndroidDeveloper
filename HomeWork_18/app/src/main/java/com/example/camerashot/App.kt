@@ -10,25 +10,25 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-//        photoDatabase = Room.databaseBuilder(
-//            applicationContext,
-//            PhotoDatabase::class.java,
-//            "photoDataBase"
-//        ).build()
+        photoDatabase = Room.databaseBuilder(
+            applicationContext,
+            PhotoDatabase::class.java,
+            "photoDataBase"
+        ).build()
 
-        INSTANCE = this
-
-        photoDatabase = Room
-            .inMemoryDatabaseBuilder(
-            this,
-            PhotoDatabase::class.java
-            )
-            .fallbackToDestructiveMigration()
-            .build()
+//        INSTANCE = this
+//
+//        photoDatabase = Room
+//            .inMemoryDatabaseBuilder(
+//            this,
+//            PhotoDatabase::class.java
+//            )
+//            .fallbackToDestructiveMigration()
+//            .build()
     }
 
-    companion object {
-        lateinit var INSTANCE: App
-            private set
-    }
+//    companion object {
+//        lateinit var INSTANCE: App
+//            private set
+//    }
 }

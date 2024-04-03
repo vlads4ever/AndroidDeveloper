@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class Repository(context: Context?) {
-    val photoBase = (context?.applicationContext as App).photoDatabase.photoDao()
+    private val photoBase = (context?.applicationContext as App).photoDatabase.photoDao()
 
     fun savePhoto(uri: String, name: String) {
         val photo = Photo(uri, name)
