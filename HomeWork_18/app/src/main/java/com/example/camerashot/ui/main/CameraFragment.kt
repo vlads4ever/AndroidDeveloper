@@ -20,6 +20,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.example.camerashot.R
 import com.example.camerashot.data.Repository
 import com.example.camerashot.databinding.FragmentCameraBinding
 import kotlinx.coroutines.launch
@@ -77,10 +80,19 @@ class CameraFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         startCamera()
+
         binding.takeShotButton.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch {
                 takePhoto()
             }
+        }
+
+        binding.backButton.setOnClickListener {
+            findNavController().navigate(R.id.action_cameraFragment_to_mainFragment)
+        }
+
+        binding.imagePreview.setOnClickListener {
+            findNavController().navigate(R.id.action_cameraFragment_to_mainFragment)
         }
     }
 
@@ -146,6 +158,11 @@ class CameraFragment : Fragment() {
                             name
                         )
                     }
+
+                    Glide.with(this@CameraFragment)
+                        .load(outputFileResults.savedUri)
+                        .circleCrop()
+                        .into(binding.imagePreview)
                 }
 
                 override fun onError(exception: ImageCaptureException) {
