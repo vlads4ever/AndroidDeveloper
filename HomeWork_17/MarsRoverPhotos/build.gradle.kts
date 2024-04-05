@@ -6,3 +6,10 @@ plugins {
     // To use Kotlin Symbol Processing (KSP)
     id("com.google.devtools.ksp") version "1.9.0-1.0.13" apply false
 }
+
+// Hilt
+buildscript {
+    dependencies {
+        classpath (libs.hilt.android.gradle.plugin)
+    }
+}

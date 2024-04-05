@@ -7,6 +7,9 @@ plugins {
 
     // Parcelize
     id("org.jetbrains.kotlin.plugin.parcelize")
+
+    // Hilt
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -77,4 +80,8 @@ dependencies {
     ksp(libs.moshi.kotlin.codegen)
     implementation(libs.converter.moshi)
     implementation(libs.moshi.kotlin)
+
+    // Hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
 }

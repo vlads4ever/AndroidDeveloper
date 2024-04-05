@@ -1,4 +1,4 @@
-package com.example.marsroverphotos.ui.main
+package com.example.marsroverphotos.presentation
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -8,36 +8,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.marsroverphotos.model.Photo
-import com.example.marsroverphotos.repository.Repository
 
 import com.example.marsroverphotos.R
 import com.example.marsroverphotos.databinding.FragmentMainBinding
+import com.example.marsroverphotos.entity.PhotoInterface
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 private const val PHOTO = "photo"
 private const val DATE = "date"
 
+@AndroidEntryPoint
 class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding?  = null
     private val binding get() = _binding!!
-    private var data: String? = null
-    private val viewModel: MainViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-                    return MainViewModel(Repository(context?.applicationContext), data) as T
-                } else {
-                    throw IllegalArgumentException("")
-                }
-            }
-        }
-    }
+    private var date: String? = null
+
+    @Inject
+    lateinit var mainViewModelFactory: MainViewModelFactory
+    private val viewModel: MainViewModel by viewModels { mainViewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +45,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.let {
-            data = it.getString(DATE)
+            date = it.getString(DATE)
         }
 
         val pictureAdapter = PictureAdapter(requireContext()) { photo -> onClick(photo!!) }
@@ -68,14 +62,16 @@ class MainFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.setDate(date)
             viewModel.getPhotosList()
             viewModel.photosStateFlow.collect { results ->
-                Log.d("Fragment", (results == null).toString())
+                Log.d("Fragment", results.toString())
                 if (results != null) pictureAdapter.setData(results)
             }
         }
+
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.errorMessageFlow.collect {error ->
+            viewModel.errorMessageFlow.collect { error ->
                 if (error != null) Toast.makeText(
                     requireContext(),
                     error.toString(),
@@ -83,9 +79,15 @@ class MainFragment : Fragment() {
                 ).show()
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.stateLoad.collect { loadState ->
+                    binding.progressBar.isVisible = loadState
+            }
+        }
     }
 
-    private fun onClick(photo: Photo) {
+    private fun onClick(photo: PhotoInterface) {
         val bundle = Bundle().apply {
             putParcelable(PHOTO, photo)
         }

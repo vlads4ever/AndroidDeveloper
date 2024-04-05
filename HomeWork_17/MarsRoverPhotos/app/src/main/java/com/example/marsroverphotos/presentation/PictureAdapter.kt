@@ -1,4 +1,4 @@
-package com.example.marsroverphotos.ui.main
+package com.example.marsroverphotos.presentation
 
 import android.content.Context
 import android.util.Log
@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.marsroverphotos.model.Photo
-import com.example.marsroverphotos.model.Results
 import com.example.marsroverphotos.R
+import com.example.marsroverphotos.data.Photo
+import com.example.marsroverphotos.data.Results
 import com.example.marsroverphotos.databinding.PictureCardBinding
 import retrofit2.Response
 
@@ -51,6 +51,7 @@ class PictureAdapter(
     fun setData(results: Response<Results>?) {
         if (results != null) this.results = results
         notifyDataSetChanged()
+        Log.d("GotFragment", results.toString())
     }
 }
 

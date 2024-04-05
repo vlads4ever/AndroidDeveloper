@@ -1,4 +1,4 @@
-package com.example.marsroverphotos.ui.main
+package com.example.marsroverphotos.presentation
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

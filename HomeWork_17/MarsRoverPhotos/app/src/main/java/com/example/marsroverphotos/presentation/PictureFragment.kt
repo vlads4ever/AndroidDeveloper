@@ -1,4 +1,4 @@
-package com.example.marsroverphotos.ui.main
+package com.example.marsroverphotos.presentation
 
 import android.os.Bundle
 import android.util.Log
@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
-import com.example.marsroverphotos.model.Photo
 import com.example.marsroverphotos.R
+import com.example.marsroverphotos.data.Photo
 import com.example.marsroverphotos.databinding.FragmentPictureBinding
 
 private const val PHOTO = "photo"

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.marsroverphotos.ui.main.MainFragment"
+        android:name="com.example.marsroverphotos.presentation.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
@@ -23,12 +23,12 @@
     </fragment>
     <fragment
         android:id="@+id/pictureFragment"
-        android:name="com.example.marsroverphotos.ui.main.PictureFragment"
+        android:name="com.example.marsroverphotos.presentation.PictureFragment"
         android:label="fragment_picture"
         tools:layout="@layout/fragment_picture" />
     <fragment
         android:id="@+id/settingFragment"
-        android:name="com.example.marsroverphotos.ui.main.SettingFragment"
+        android:name="com.example.marsroverphotos.presentation.SettingFragment"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" >
         <action
