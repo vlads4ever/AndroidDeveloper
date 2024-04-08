@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.attractions.App
 import com.example.attractions.data.FeatureCollection
 import com.example.attractions.data.Repository
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
@@ -25,7 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val context: Context,
+    @ApplicationContext private val context: Context,
     private val repository: Repository
 ) : ViewModel() {
     private var _geoLocationFlow = MutableStateFlow<Point?>(null)

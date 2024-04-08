@@ -3,6 +3,7 @@ package com.example.attractions.presentation
 import android.animation.AnimatorInflater
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +12,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import com.example.attractions.R
 import com.example.attractions.data.FeatureCollection
 import com.example.attractions.data.PointUserData
+import com.example.attractions.data.Repository
 import com.example.attractions.databinding.FragmentYandexMapsBinding
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKit
@@ -39,6 +43,21 @@ class YandexMapsFragment : Fragment() {
 
     private val viewModel: MainViewModel by viewModels()
 
+//    private val viewModel: MainViewModel by viewModels {
+//        object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+//                if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+//                    return MainViewModel(
+//                        requireContext(),
+//                        Repository()
+//                    ) as T
+//                } else {
+//                    throw IllegalArgumentException("")
+//                }
+//            }
+//        }
+//    }
+
     private val permissions = arrayOf(
         android.Manifest.permission.ACCESS_FINE_LOCATION,
         android.Manifest.permission.ACCESS_COARSE_LOCATION
@@ -53,16 +72,12 @@ class YandexMapsFragment : Fragment() {
     private var isDescriptionOpened = false
     private var fromState = false
 
-//    @Inject
-//    lateinit var mainViewModelFactory: MainViewModelFactory
-//    private val viewModel: MainViewModel by viewModels { mainViewModelFactory }
-
-private val launcher =
-    registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-        if (permissions.values.all { it }) {
-            viewModel.startLocation()
+    private val launcher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            if (permissions.values.all { it }) {
+                viewModel.startLocation()
+            }
         }
-    }
 
     private val pointTapListener = MapObjectTapListener { mapObject, _ ->
         val extractedPointUserData = mapObject.userData
@@ -107,8 +122,8 @@ private val launcher =
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentYandexMapsBinding.inflate(layoutInflater, container, false)
+    ): View {
+        _binding = FragmentYandexMapsBinding.inflate(layoutInflater)
         return binding.root
     }
 

@@ -10,4 +10,5 @@
         android:name="com.example.attractions.presentation.YandexMapsFragment"
         android:label="fragment_yandex_maps"
         tools:layout="@layout/fragment_yandex_maps" />
+
 </navigation>

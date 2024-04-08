@@ -6,6 +6,7 @@ junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 appcompat = "1.6.1"
+kotlinxCoroutinesCore = "1.8.0"
 material = "1.11.0"
 hiltAndroid = "2.51.1"
 fragmentKtx = "1.6.2"
@@ -21,7 +22,7 @@ lifecycleViewmodelKtx = "2.7.0"
 navigationFragmentKtx = "2.7.7"
 navigationUiKtx = "2.7.7"
 mapsMobile = "4.5.1-full"
-activity = "1.8.0"
+activity = "1.8.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -33,6 +34,7 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
 maps-mobile = { module = "com.yandex.android:maps.mobile", version.ref = "mapsMobile" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }

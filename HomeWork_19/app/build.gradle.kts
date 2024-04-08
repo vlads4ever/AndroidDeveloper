@@ -58,6 +58,9 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    //Coroutines
+    implementation(libs.kotlinx.coroutines.core)
+
     //Fragments
     implementation(libs.androidx.fragment.ktx)
 
