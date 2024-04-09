@@ -53,10 +53,6 @@ class MainViewModel @Inject constructor(
         }
     }
 
-//    init {
-//        fusedClient = LocationServices.getFusedLocationProviderClient(context)
-//    }
-
     fun getFeatureCollectionFlow(point: Point) {
         viewModelScope.launch(Dispatchers.IO) {
             kotlin.runCatching {

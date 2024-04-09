@@ -9,6 +9,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         MapKitFactory.setApiKey(YANDEX_MAPS_API_KEY)
+        MapKitFactory.initialize(this)
     }
 
     companion object {

@@ -3,7 +3,6 @@ package com.example.attractions.presentation
 import android.animation.AnimatorInflater
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,14 +11,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import com.example.attractions.R
 import com.example.attractions.data.FeatureCollection
 import com.example.attractions.data.PointUserData
-import com.example.attractions.data.Repository
 import com.example.attractions.databinding.FragmentYandexMapsBinding
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKit
@@ -33,6 +29,7 @@ import com.yandex.mapkit.map.MapObjectCollection
 import com.yandex.mapkit.map.MapObjectTapListener
 import com.yandex.mapkit.map.PlacemarkMapObject
 import com.yandex.mapkit.mapview.MapView
+import com.yandex.runtime.image.ImageProvider
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -42,21 +39,6 @@ class YandexMapsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: MainViewModel by viewModels()
-
-//    private val viewModel: MainViewModel by viewModels {
-//        object : ViewModelProvider.Factory {
-//            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//                if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-//                    return MainViewModel(
-//                        requireContext(),
-//                        Repository()
-//                    ) as T
-//                } else {
-//                    throw IllegalArgumentException("")
-//                }
-//            }
-//        }
-//    }
 
     private val permissions = arrayOf(
         android.Manifest.permission.ACCESS_FINE_LOCATION,
@@ -70,7 +52,6 @@ class YandexMapsFragment : Fragment() {
     private lateinit var mapObjects: MapObjectCollection
 
     private var isDescriptionOpened = false
-    private var fromState = false
 
     private val launcher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
@@ -97,18 +78,9 @@ class YandexMapsFragment : Fragment() {
         override fun onMapLongTap(p0: Map, p1: Point) {  }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        MapKitFactory.initialize(requireContext())
-        mapView = binding.mapView
-        checkPermissions()
-    }
-
     override fun onStart() {
         super.onStart()
         MapKitFactory.getInstance().onStart()
-        mapKit = MapKitFactory.getInstance()
         mapView.onStart()
     }
 
@@ -117,6 +89,11 @@ class YandexMapsFragment : Fragment() {
         MapKitFactory.getInstance().onStop()
         viewModel.fusedClient.removeLocationUpdates(viewModel.locationCallback)
         super.onStop()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        checkPermissions()
     }
 
     override fun onCreateView(
@@ -130,6 +107,8 @@ class YandexMapsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        mapView = binding.mapView
+        mapKit = MapKitFactory.getInstance()
         val user = mapKit.createUserLocationLayer(mapView.mapWindow)
         user.isVisible = true
         mapObjects = mapView.mapWindow.map.mapObjects.addCollection()
@@ -140,7 +119,7 @@ class YandexMapsFragment : Fragment() {
             if (screenState != null) {
                 mapView.mapWindow.map.move(
                     CameraPosition(
-                        Point(screenState.latitude, screenState.longitude),
+                        Point(screenState.longitude, screenState.latitude),
                         screenState.zoom,
                         screenState.azimuth,
                         screenState.tilt
@@ -151,7 +130,6 @@ class YandexMapsFragment : Fragment() {
                     binding.xid.text = screenState.xid
                     openDescriptionCard()
                 }
-                fromState = true
             }
         }
 
@@ -205,13 +183,11 @@ class YandexMapsFragment : Fragment() {
                 if (point != null) {
                     if (!this@YandexMapsFragment::currentLocation.isInitialized) {
                         currentLocation = point
-                        if (!fromState) {
-                            mapView.mapWindow.map.move(
-                                CameraPosition(currentLocation, 15.0f, 0.0f, 0.0f),
-                                Animation(Animation.Type.SMOOTH, 2.0f),
-                                null
-                            )
-                        }
+                        mapView.mapWindow.map.move(
+                            CameraPosition(currentLocation, 15.0f, 0.0f, 0.0f),
+                            Animation(Animation.Type.SMOOTH, 1.0f),
+                            null
+                        )
                         viewModel.getFeatureCollectionFlow(currentLocation)
                     } else {
                         currentLocation = point
@@ -235,7 +211,10 @@ class YandexMapsFragment : Fragment() {
             val marker = mapView.mapWindow.map.mapObjects.addPlacemark(
                 Point(feature.geometry.coordinates[1], feature.geometry.coordinates[0])
             ).also {
-                it.setIconStyle(IconStyle().setScale(5.0f))
+                it.setIcon(
+                    ImageProvider.fromResource(requireContext(), R.drawable.marker),
+                    IconStyle().setScale(0.1f)
+                )
             }
             marker.userData = PointUserData(feature.properties.xid, feature.properties.name)
             marker.addTapListener(pointTapListener)

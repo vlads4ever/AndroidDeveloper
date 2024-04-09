@@ -14,6 +14,7 @@ moshi = "1.15.1"
 moshiKotlin = "1.14.0"
 moshiKotlinCodegen = "1.15.0"
 converterMoshi = "2.9.0"
+playServicesLocation = "21.2.0"
 retrofit = "2.10.0"
 glide = "4.16.0"
 constraintlayout = "2.1.4"
@@ -21,7 +22,7 @@ lifecycleLivedataKtx = "2.7.0"
 lifecycleViewmodelKtx = "2.7.0"
 navigationFragmentKtx = "2.7.7"
 navigationUiKtx = "2.7.7"
-mapsMobile = "4.5.1-full"
+mapsMobile = "4.5.1-lite"
 activity = "1.8.2"
 
 [libraries]
@@ -41,6 +42,7 @@ moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
 moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshiKotlin" }
 moshi-kotlin-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshiKotlinCodegen" }
 converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "converterMoshi" }
+play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
