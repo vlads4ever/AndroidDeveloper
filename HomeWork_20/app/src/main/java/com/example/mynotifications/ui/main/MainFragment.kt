@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,8 @@ import com.example.mynotifications.MainActivity
 import com.example.mynotifications.R
 
 import com.example.mynotifications.databinding.FragmentMainBinding
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.messaging.FirebaseMessaging
 
 class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding?  = null
@@ -56,11 +59,26 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.trowExceptionButton.setOnClickListener {
-
+            FirebaseCrashlytics.getInstance().log("My test crash for Firebase Crashlytics.")
+            Toast
+                .makeText(requireContext(), "Crash was imitated.", Toast.LENGTH_SHORT)
+                .show()
+            try {
+                throw Exception("Test exception.")
+            } catch (e: Exception) {
+                FirebaseCrashlytics.getInstance().recordException(e)
+                Toast
+                    .makeText(requireContext(), "Crash in Try-Catch was imitated.", Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
 
         binding.getNotificationButton.setOnClickListener {
             createNotification()
+        }
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            Log.d("TOKEN", it.result)
         }
     }
 

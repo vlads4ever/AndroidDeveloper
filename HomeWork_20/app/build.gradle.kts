@@ -1,6 +1,12 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+
+    // For Firebase - Add the Google services Gradle plugin
+    id("com.google.gms.google-services")
+
+    // For Firebase Crashlytics
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -52,4 +58,14 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation("com.google.firebase:firebase-analytics")
+
+    // Firebase Crashlytics
+    implementation("com.google.firebase:firebase-crashlytics")
+
+    // Firebase Messaging
+    implementation ("com.google.firebase:firebase-messaging-ktx")
 }
